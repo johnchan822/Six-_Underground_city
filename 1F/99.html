@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>九九乘法表</title>
+</head>
+<body>
+  <div id = "app">
+  <div class="inner">
+    <div class="all_items">
+      <div class=" section_title">
+        <div class="xstyle">
+          <div>x</div>
+          <span class="long"></span>
+          <div>x</div>
+        </div>
+        <div class="title">
+            <h1>九九乘法表</h1>
+            <h2>MULTIPLICATION CHART</h2>
+        </div>
+        <div class="xstyle">
+          <div>x</div>
+          <span class="long"></span>
+          <div>x</div>
+        </div>
+      </div>
+      <div class="item" v-for="(x, key) in count.xs">
+        <div class="title">{{x}}</div>
+        <div class="content" v-for ="(y, key) in count.ys">{{x}} x {{y}} = {{x*y}}</div>
+      </div>
+
+    </div>
+  </div>
+      </div>    
+  </div>
+</body>
+<style>
+  /* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+
+  body{
+    font-family: Helvetica Neue;
+      background-color:#F0F0F0 ;
+  }
+  .inner{
+    max-width: 1280px;
+    margin: 0 auto;
+    color:#2EB738;
+  }
+  .all_items{
+    padding: 5% 0;
+      display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .xstyle{
+    display: flex;
+    align-items: center;
+  }
+  .long{
+    width: 300px;
+    height: 1px;
+    background: #2EB738;
+    margin: 0 20px;
+  }
+  .section_title{
+    display: flex;
+    font-size: 20px;
+    width:350px;
+    margin: 10px 0;
+    height: 366px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+  }
+  .title{
+    text-align: center;
+  }
+  .title h1{
+     font-size: 56px; 
+     margin-bottom: 20px; 
+     font-weight: bold;
+  }
+  .title h2{
+     font-size: 22px;  
+     font-weight: bold;
+  }
+  .item{
+    border-radius: 100px 0px 30px 0px;
+    background-color: #ffffff;
+    display: flex;
+    font-size: 20px;
+    width:350px;
+    margin: 10px 0;
+    height: 366px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+    border-left-style: 50px;
+  }
+  .item .title{
+    font-size: 128px;
+      padding: 20px;
+  }
+  .item .content{
+    padding: 18px;
+    font-size: 20px;
+  }
+
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+          count:{
+            xs: 9,
+            ys:9
+            
+          }
+    }
+  })
+
+
+
+</script>
+</html>

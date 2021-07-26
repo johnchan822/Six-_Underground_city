@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>計算機</title>
+</head>
+<body>
+<div id ='app'>
+    <div class="calculator">
+      <div class="top">
+      <div class="repeat">{{show}}</div>
+        <input class="display" v-model='current' disabled="disabled" :class="{'Fontsmall': isSmall}"></input>
+      </div>
+      <div class="bottom">
+      <div class="btn"@click="append('7')">7</div>
+      <div class="btn"@click="append('8')">8</div>
+      <div class="btn"@click="append('9')">9</div>
+      <div class="btn operator" @click='divide'>÷</div>
+      <div class="btn" @click="append('4')">4</div>
+      <div class="btn" @click="append('5')">5</div>
+      <div class="btn" @click="append('6')">6</div>
+      <div class="btn operator" @click='mult'>x</div>
+      <div class="btn"@click="append('1')">1</div>
+      <div class="btn"@click="append('2')">2</div>
+      <div class="btn"@click="append('3')">3</div>
+      <div class="btn operator" @click='add'>+</div>
+      <div class="btn "@click="append('0')">0</div>
+      <div class="btn " @click="append('00')">00</div>
+      <div class="btn"  @click="dot">.</div>
+      <div class="btn operator" @click='less'>-</div>
+      <div class="btn  blue" @click='reset'>AC</div>
+      <div class="btn  blue" @click='back'>⌫</div>
+      <div class="btn equal" @click='equal'>=</div>
+    </div>
+      </div>
+  </div>
+</div>
+
+</body>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+body{
+  background-color: #E8E8E8;
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}  
+.calculator{
+  border-radius: 25px;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 350px;
+  background-color: #062145;
+  color: white;
+}
+.top{
+  border-radius:25px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+ text-align: center;
+ background-color: #041936;
+}
+
+.top .display{
+  height: 50px;
+  border-top-left-radius: 25px;
+  border-top-left-radius: 25px;
+  font-size: 56px;
+  background-color: #041936;
+  color: white;
+    outline: 0;
+  text-align: end;
+  border: #041936;
+  overflow-x: auto;
+}
+.top .Fontsmall{
+  font-size: 36px;
+}
+.top .repeat{
+   text-align: end;
+    color:#00C4FF;
+    height: 30px ;
+
+}
+.bottom{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 24px;
+    padding: 5px;
+}
+.btn{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  text-align: center;
+  width: 20%;
+  height: 64px;
+  border-radius:10px;
+  margin: 8px;
+  opacity: 0.7;
+  transition: .2s;
+}
+
+.btn:hover{
+  opacity: 1;
+  transition: .2s;
+}
+
+.operator{
+  background: #041936;
+}
+.equal{
+  width: 155px;
+  background:linear-gradient(to left, #00C4FF, #6C00FF); 
+}
+.blue{
+  color: #00C4FF;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data() {
+      return {
+        show: '',
+        current: '',    //現在的顯示
+        isSmall: false,
+      };
+    },
+    methods: {
+      //  輸入時是以字串的串接，所以一開始的開頭不能為0
+      append(number){
+          if(this.current =="" ){
+          if( number === "00" || number === '.'){
+            return
+          }
+            }
+
+        if(this.current.length>8){
+            this.isSmall =true;
+          } else{
+              this.isSmall = false;
+          }
+          //  這邊加入千分號有問題
+        this.current  =`${this.current}${number}`;
+        this.show = `${this.show}${number}`;
+      },
+      add(){
+        if (this.current == ""){
+            return;
+        }
+        this.show = `${this.show}+` 
+        this.setPrevious();
+      },
+      divide() {
+          if (this.current == "") {
+          return;
+        }
+          this.show = `${this.show}/`
+          this.setPrevious();
+      },
+      mult() { 
+          if (this.current == "") {
+          return;
+        }
+        this.show = `${this.show}*`
+        this.setPrevious();
+      },
+      less() {
+          if (this.current == "") {
+          return;
+        }
+        this.show = `${this.show}-`
+        this.setPrevious();
+      },
+      percent(){
+          if (this.current == "") {
+          return;
+        }
+        this.show = `${this.show}%`
+          this.setPrevious();
+      },
+      equal() {  
+          //方法會回傳給定元素於陣列中第一個被找到之索引，若不存在於陣列中則回傳 -1。
+          if( this.current.indexOf(".") !== -1  && this.current <= 1 ){
+          this.current = this.toCurrency(eval(this.show).toFixed(2));
+          this.isSmall = true;
+          }
+          else{
+              this.current = this.toCurrency(eval(this.show));
+          }
+        this.show = this.current;
+        // 注意數字的型別沒辦法取長度，要轉換為string型別才可以
+        if (this.current.toString().length > 8) {
+          this.isSmall = true;
+        } else {
+          this.isSmall = false;
+        }
+        
+
+
+      }, 
+      setPrevious() {
+        this.current ="";
+      },
+      reset(){
+        this.current =''; 
+        this.show ='';
+      },
+      dot() {
+        if (this.current.indexOf(".") === -1) {
+          this.append(".");
+        }
+      },
+      back(){
+        this.current = this.current.slice(0, this.current.length -1);
+        this.show =  this.show.slice(0, this.show.length-1)
+      },
+    toCurrency(num){
+    var parts = num.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  },
+    },
+  })
+</script>
+</html>
