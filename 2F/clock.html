@@ -128,13 +128,13 @@ table {
     },
     methods: {
       clockRun(){
-        this.time = new Date();
+          this.time = new Date();
           this.min = (this.time.getMinutes()+1);
           this.second = (this.time.getSeconds()+1)*6;
           this.hour =(this.time.getHours())*15;
-          document.querySelector('.second-hand').style.transform = `rotate(${180 + this.second}deg)`;
-          document.querySelector('.hour-hand').style.transform = `rotate(${270 + this.hour}deg)`;
-          document.querySelector('.minute-hand').style.transform = `rotate(${180 + this.min}deg)`;
+          this.$refs.secHand.style.transform = `rotate(${180 + this.second}deg)`;
+          this.$refs.hourHand.style.transform = `rotate(${270 + this.hour}deg)`;
+          this.$refs.minHand.style.transform = `rotate(${180 }deg)`;
       }
     },
     mounted() {
